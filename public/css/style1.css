@@ -1,0 +1,202 @@
+/* Importar la fuente Bellerose */
+@font-face {
+    font-family: 'Bellerose';
+    src: url('fonts/Bellerose.ttf') format('truetype');
+}
+
+/* Estilos personalizados para la barra de navegación */
+.navbar-custom {
+    background-color: #f8f9fa; /* Puedes cambiar el color de fondo si lo deseas */
+}
+
+/* Ajustes para el logotipo */
+.navbar-custom .navbar-brand img {
+    width: 73%;
+    height: 73%;
+}
+
+/* Estilos personalizados para los enlaces de navegación */
+.navbar-custom .nav-link {
+    font-family: 'bellerose';
+    color: #000;
+    font-size: 16px; /* Tamaño de fuente reducido */
+    padding: 10px 15px;
+    white-space: nowrap; /* Prevenir que el texto se divida en varias líneas */
+    text-align: right;
+}
+
+/* Estilos para la lista de navegación */
+.navbar-custom .navbar-nav {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: flex-end; /* Alinea los elementos al extremo derecho */
+    width: 100%;
+    margin-left: 20px; /* Añadir margen izquierdo para separar de la imagen */
+}
+
+/* Estilos para los elementos de la lista de navegación */
+.navbar-custom .nav-item {
+    margin: 0 10px;
+}
+
+/* Estilo para los enlaces al pasar el ratón por encima */
+.navbar-custom .nav-link:hover {
+    color: #007bff;
+}
+
+/* Estilos específicos para inicio en la parte objetivo*/
+
+  
+  .menu10{
+    text-align: center;
+    /* tipo de texto de de nuestra historia */
+    font-family: 'claphappy';
+  
+  color:#7AB730;
+  font-size: 40px;
+  }
+
+  .testimonial-carousel .owl-dots {
+    margin-top: 5px;
+    text-align: center;
+  }
+  
+  .testimonial-carousel .owl-dot {
+    position: relative;
+    display: inline-block;
+    margin: 0 25px;
+    width: 20px;
+    height: 20px;
+    background: #DDDDDD;
+    transition: .5s;
+  }
+  
+  .testimonial-carousel .owl-dot.active {
+    width: 80px;
+    background: #7AB730;
+  }
+  
+
+  /* Ajustar la medida del cuadro de la imegnes de inicio  */ 
+  @media (min-width: 992px) {
+    .about-text {
+      margin-left: -90px;
+  
+    }
+  }
+
+
+
+  
+/* Estilos para la segunda paguina  */
+
+
+
+
+    body {
+        margin: 0;
+        padding: 0;
+    }
+    .seccion {
+        height: 100vh; /* Opcional: altura de cada sección a pantalla completa */
+    }
+    .seccionor {
+        height: 70vh; /* Opcional: altura de cada sección a pantalla completa */
+    }
+    .seccion1 {
+        background-image: url(img/hojitas4.png);
+    }
+    .seccion2{
+        background-image: url(img/hojitas4.png);
+    }
+    .seccion3{
+        background-image: url(img/hojitas4.png);
+        height: 90vh; 
+    }
+    .btn-custom {
+        background-color: #7ab730;
+        border-color: #7ab730;
+        color: white;
+    }
+    .btn-custom:hover {
+        background-color: #689d28;
+        border-color: #689d28;
+        color: white;
+    }
+    /* Agrega estilos para otras secciones si es necesario */
+
+    li{
+      float: left;
+    }
+
+    .navbar-light .navbar-nav .nav-link {
+      padding: 5px 15px;
+      color: black;
+      font-weight: 500;
+      font-size: 19px;
+      outline: none;
+      font-family: 'Claphappy', sans-serif;
+    }
+
+
+    @media (max-width:767px) {}
+@media (min-width:768px) and (max-width:979px) {}
+ul li a{
+  display: block;
+  text-decoration: none;
+  color: whitesmoke;
+  text-align: center;
+  padding: 14px;
+  font-size: 90px;
+
+}
+li:hover{
+  background-color:rgba(0, 0,0, .1);
+}
+li:active{
+  background-color:rgba(0, 0,0, .1);
+}
+
+ul{
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  position: center;
+  top: 0;
+  width: 100%;
+  background-color: #fff;
+  left: 0;
+}
+
+.navbar-nav {
+  display: flex;
+  flex-direction: column;
+  padding-left: 0;
+  margin-bottom: 0;
+  align-content: stretch;
+  justify-content: space-between;
+  align-items: center;
+}
+
+@font-face {
+  font-family: 'Claphappy';
+  src: url('/fonts/Claphappy.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Bellerose';
+  src: url('/fonts/Bellerose.ttf') format('truetype');
+}
+
+.menu5 {
+  font-family: 'Claphappy', sans-serif;
+}
+
+.menu6 {
+  font-family: 'Bellerose', sans-serif;
+}
+
+

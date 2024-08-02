@@ -1,0 +1,45 @@
+.btn-nav {
+    font-size: 16px; /* Tamaño de fuente */
+    padding: 10px 20px; /* Padding interno */
+    border-radius: 5px; /* Bordes redondeados */
+    color: #000000; /* Color de texto negro */
+    background-color: #ffffff; /* Fondo blanco */
+    border: 1px solid #000000; /* Borde negro */
+    transition: all 0.3s ease; /* Transición suave */
+}
+
+.btn-nav:hover {
+    background-color: #000000; /* Fondo negro al pasar el mouse */
+    border-color: #000000; /* Borde negro al pasar el mouse */
+    color: #ffffff; /* Texto blanco al pasar el mouse */
+}
+
+/* Estilos para el encabezado */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    background-color: #f8f9fa; /* Cambia el color de fondo según tus necesidades */
+    border-bottom: 1px solid #ccc;
+}
+
+.logo {
+    height: 50px; /* Ajusta la altura de la imagen del logo según sea necesario */
+}
+
+/* Estilos para los botones de navegación */
+.btn-nav {
+    margin-right: 10px;
+    background-color: #7ab730; /* Color verde */
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+}
+
+.btn-nav:hover {
+    background-color: #218838; /* Cambio de color al pasar el mouse */
+}
+

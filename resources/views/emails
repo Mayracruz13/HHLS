@@ -1,0 +1,14 @@
+<!-- resources/views/emails/donation-receipt.blade.php -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recibo de Donación</title>
+</head>
+<body>
+    <h1>Recibo de Donación</h1>
+    <p>Gracias por tu donación de {{ $details['amount'] }}.</p>
+    <p>Tu apoyo es muy apreciado.</p>
+</body>
+</html>

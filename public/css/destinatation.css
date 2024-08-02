@@ -1,0 +1,11 @@
+.seccion {
+    height: 140vh; /* Opcional: altura de cada sección a pantalla completa */
+}
+.seccion1 {
+    background-image: url('img/hojitas4.png');
+    
+}
+.seccion2{
+  height: 100vh;
+  background-image: url(img/hojitas4.png);
+}

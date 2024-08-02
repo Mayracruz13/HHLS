@@ -1,0 +1,28 @@
+/* public/css/custom.css */
+.border-green-500 {
+    border-color: #28a745;
+}
+
+.text-green-600 {
+    color: #28a745;
+}
+
+.focus\:ring-green-500:focus {
+    ring-color: #28a745;
+}
+
+.bg-green-600 {
+    background-color: #28a745;
+}
+
+.hover\:bg-green-700:hover {
+    background-color: #218838;
+}
+
+.focus\:bg-green-700:focus {
+    background-color: #218838;
+}
+
+.active\:bg-green-800:active {
+    background-color: #1e7e34;
+}
