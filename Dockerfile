@@ -42,8 +42,4 @@ RUN php artisan optimize && \
     php artisan view:cache && \
     php artisan migrate --force
 
-# Expone el puerto 8000 para la aplicación Laravel
-EXPOSE 8000
 
-# Comando para iniciar el servidor
-CMD php artisan serve --host=0.0.0.0 --port=8000
