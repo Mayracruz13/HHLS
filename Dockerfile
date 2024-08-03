@@ -1,7 +1,7 @@
-# Usa la imagen base de PHP con Apache
+# Usa la imagen base oficial de PHP con Apache
 FROM php:8.2-apache
 
-# Instala las dependencias del sistema
+# Instala las dependencias del sistema y el cliente MySQL
 RUN apt-get update && apt-get install -y \
     libpng-dev \
     libjpeg-dev \
@@ -10,29 +10,20 @@ RUN apt-get update && apt-get install -y \
     unzip \
     git \
     libonig-dev \
-    mysql-client \
+    default-mysql-client \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
     && docker-php-ext-install gd zip pdo pdo_mysql \
     && pecl install xdebug \
     && docker-php-ext-enable xdebug
 
+# Copia el archivo de configuración de Apache
+COPY ./apache2.conf /etc/apache2/apache2.conf
+
 # Copia el código fuente de la aplicación
 COPY . /var/www/html
 
-# Establece el directorio de trabajo
+# Configura el directorio de trabajo
 WORKDIR /var/www/html
 
-# Instala las dependencias de PHP con Composer
-RUN curl -sS https://getcomposer.org/installer | php \
-    && mv composer.phar /usr/local/bin/composer \
-    && composer install --no-autoloader --no-scripts
-
-# Genera el autoload y limpia el caché
-RUN composer dump-autoload \
-    && php artisan config:clear \
-    && php artisan cache:clear \
-    && php artisan route:clear \
-    && php artisan config:cache
-
-# Expone el puerto 80
+# Expone el puerto 80 para Apache
 EXPOSE 80
