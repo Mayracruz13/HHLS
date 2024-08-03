@@ -1,5 +1,5 @@
-# Usa una imagen base con PHP
-FROM php:8.1-cli
+# Usa una imagen base con PHP 8.2
+FROM php:8.2-cli
 
 # Instala Node.js y Yarn
 RUN curl -fsSL https://deb.nodesource.com/setup_16.x | bash - \
