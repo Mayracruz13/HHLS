@@ -16,9 +16,6 @@ RUN apt-get update && apt-get install -y \
     && pecl install xdebug \
     && docker-php-ext-enable xdebug
 
-# Copia el archivo de configuración de Apache
-COPY ./apache2.conf /etc/apache2/apache2.conf
-
 # Copia el código fuente de la aplicación
 COPY . /var/www/html
 
