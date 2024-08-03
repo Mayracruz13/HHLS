@@ -36,6 +36,10 @@ RUN composer install --no-autoloader --no-scripts
 # Copia el resto del código fuente de la aplicación
 COPY . .
 
+# Asegúrate de que la configuración esté correcta
+RUN php artisan config:cache \
+    && php artisan cache:clear
+
 # Genera el autoload y limpia el caché
 RUN composer dump-autoload \
     && php artisan route:clear \
