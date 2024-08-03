@@ -21,12 +21,15 @@ COPY --from=composer:latest /usr/bin/composer /usr/local/bin/composer
 # Establece el directorio de trabajo
 WORKDIR /var/www
 
-# Copia el archivo de dependencias y el resto del proyecto
+# Copia el archivo de dependencias y los archivos del proyecto
 COPY composer.json composer.lock ./
 COPY . .
 
 # Instala las dependencias de Composer
-RUN composer install
+RUN composer install --no-scripts --no-autoloader
+
+# Crea un archivo SQLite temporal (opcional si usas SQLite en pruebas)
+RUN mkdir -p /var/www/database && touch /var/www/database/database.sqlite
 
 # Limpia el caché de rutas y configuración
 RUN php artisan route:clear && \
