@@ -1,7 +1,7 @@
-# Usa una imagen base con PHP y Composer
-FROM php:8.2-fpm
+# Usar la imagen base oficial de PHP con Apache
+FROM php:8.2-apache
 
-# Instala dependencias del sistema
+# Instalar dependencias del sistema y extensiones de PHP
 RUN apt-get update && apt-get install -y \
     libpng-dev \
     libjpeg-dev \
@@ -10,36 +10,20 @@ RUN apt-get update && apt-get install -y \
     unzip \
     git \
     libonig-dev \
-    libmysqlclient-dev \
+    libmariadb-dev \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
     && docker-php-ext-install gd zip pdo pdo_mysql \
     && pecl install xdebug \
     && docker-php-ext-enable xdebug
 
-# Instala Composer
-RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+# Copiar el código fuente de la aplicación
+COPY . /var/www/html
 
-# Establece el directorio de trabajo
-WORKDIR /var/www/html
+# Establecer permisos adecuados
+RUN chown -R www-data:www-data /var/www/html
 
-# Copia los archivos de Composer
-COPY composer.json composer.lock ./
+# Configurar el puerto en el que Apache escuchará
+EXPOSE 80
 
-# Instala las dependencias de PHP con Composer
-RUN composer install --no-autoloader --no-scripts
-
-# Copia el resto del código fuente de la aplicación
-COPY . .
-
-# Genera el autoload y limpia el caché
-RUN composer dump-autoload \
-    && php artisan config:clear \
-    && php artisan cache:clear \
-    && php artisan route:clear \
-    && php artisan config:cache
-
-# Exponer el puerto 9000
-EXPOSE 9000
-
-# Comando por defecto
-CMD ["php-fpm"]
+# Configurar el contenedor para que ejecute Apache en primer plano
+CMD ["apache2-foreground"]
