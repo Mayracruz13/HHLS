@@ -21,17 +21,14 @@ COPY --from=composer:latest /usr/bin/composer /usr/local/bin/composer
 # Establece el directorio de trabajo
 WORKDIR /var/www
 
-# Copia el archivo de dependencias y los archivos del proyecto
+# Copia el archivo de dependencias y el resto del proyecto
 COPY composer.json composer.lock ./
 COPY . .
 
 # Instala las dependencias de Composer
-RUN composer install --no-scripts --no-autoloader
+RUN composer install
 
-# Ahora copia el resto del proyecto
-COPY . .
-
-# Ahora las dependencias deben estar instaladas, por lo que se puede limpiar el caché
+# Limpia el caché de rutas y configuración
 RUN php artisan route:clear && \
     php artisan config:clear && \
     php artisan cache:clear
