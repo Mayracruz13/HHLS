@@ -23,8 +23,6 @@ WORKDIR /var/www
 
 # Copia el archivo de dependencias y los archivos del proyecto
 COPY composer.json composer.lock ./
-
-# Instala las dependencias de Composer
 RUN composer install --no-scripts --no-autoloader
 
 # Copia el resto de los archivos del proyecto
