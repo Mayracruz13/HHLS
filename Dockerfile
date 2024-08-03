@@ -28,7 +28,7 @@ COPY . .
 # Instala las dependencias de Composer
 RUN composer install --no-scripts --no-autoloader
 
-# Copia el resto de los archivos del proyecto
+# Ahora copia el resto del proyecto
 COPY . .
 
 # Ahora las dependencias deben estar instaladas, por lo que se puede limpiar el caché
