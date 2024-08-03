@@ -10,7 +10,7 @@ RUN apt-get update && apt-get install -y \
     unzip \
     git \
     libonig-dev \
-    mysql-client \
+    default-mysql-client \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
     && docker-php-ext-install gd zip pdo pdo_mysql \
     && pecl install xdebug \
