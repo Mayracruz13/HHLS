@@ -12,13 +12,13 @@ RUN apt-get update && apt-get install -y \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
     && docker-php-ext-install gd
 
-# Instala Composer
-COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
-
-# Instala Node.js y Yarn
-RUN curl -fsSL https://deb.nodesource.com/setup_16.x | bash - \
+# Instala Node.js 18 y Yarn
+RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash - \
     && apt-get install -y nodejs \
     && npm install -g yarn
+
+# Instala Composer
+COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
 # Copia el código de la aplicación
 COPY . /app
