@@ -12,7 +12,6 @@ RUN apt-get update && apt-get install -y \
     libonig-dev \
     libicu-dev \
     libxml2-dev \
-    libsqlite3-dev \
     curl \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
     && docker-php-ext-install gd zip pdo pdo_mysql \
@@ -36,14 +35,9 @@ RUN composer install --no-autoloader --no-scripts
 # Copia el resto del código fuente de la aplicación
 COPY . .
 
-# Asegúrate de que la configuración esté correcta
-RUN php artisan config:cache \
-    && php artisan cache:clear
-
 # Genera el autoload y limpia el caché
 RUN composer dump-autoload \
-    && php artisan route:clear \
-    && php artisan config:clear \
+    && php artisan config:cache \
     && php artisan cache:clear
 
 # Exponer el puerto 80 para la web
