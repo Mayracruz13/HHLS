@@ -26,4 +26,4 @@ WORKDIR /var/www/html
 EXPOSE 80
 
 # Ejecuta las migraciones al iniciar el contenedor
-CMD php artisan migrate --force && php -S 0.0.0.0:8000 -t public
+CMD php artisan migrate --force 
