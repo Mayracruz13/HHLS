@@ -10,6 +10,7 @@ RUN apt-get update && apt-get install -y \
     unzip \
     git \
     libonig-dev \
+    mysql-client \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
     && docker-php-ext-install gd zip pdo pdo_mysql \
     && pecl install xdebug \
@@ -25,11 +26,15 @@ WORKDIR /var/www
 COPY composer.json composer.lock ./
 RUN composer install --no-scripts --no-autoloader
 
-# Copia el resto de los archivos del proyecto
+# Copia el resto de los archivos del proyecto, incluyendo el archivo .env
 COPY . .
+
+# Verifica el contenido del archivo .env
+RUN cat .env
 
 # Genera el autoload y limpia el caché
 RUN composer dump-autoload && \
+    php artisan config:cache && \
     php artisan route:clear && \
     php artisan config:clear && \
     php artisan cache:clear
