@@ -1,7 +1,7 @@
-# Usa una imagen base oficial de PHP
-FROM php:8.2-fpm
+# Usa una imagen base de PHP con Apache
+FROM php:8.2-apache
 
-# Instala las dependencias y extensiones necesarias
+# Instala dependencias del sistema y extensiones de PHP
 RUN apt-get update && apt-get install -y \
     libpng-dev \
     libjpeg-dev \
@@ -10,23 +10,27 @@ RUN apt-get update && apt-get install -y \
     unzip \
     git \
     libonig-dev \
-    default-mysql-client \
+    libicu-dev \
+    libxml2-dev \
+    libsqlite3-dev \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
     && docker-php-ext-install gd zip pdo pdo_mysql \
     && pecl install xdebug \
-    && docker-php-ext-enable xdebug
+    && docker-php-ext-enable xdebug \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
 
-# Copia el código fuente de tu aplicación al contenedor
-COPY . /var/www
+# Configura el directorio de trabajo
+WORKDIR /var/www/html
 
-# Establece el directorio de trabajo
-WORKDIR /var/www
+# Copia el archivo composer.lock y composer.json
+COPY composer.json composer.lock ./
 
-# Instala Composer (gestor de dependencias para PHP)
-RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+# Instala las dependencias de PHP con Composer
+RUN composer install --no-autoloader --no-scripts
 
-# Instala las dependencias de PHP usando Composer
-RUN composer install --no-dev --optimize-autoloader
+# Copia el resto del código fuente de la aplicación
+COPY . .
 
 # Genera el autoload y limpia el caché
 RUN composer dump-autoload \
@@ -34,8 +38,8 @@ RUN composer dump-autoload \
     && php artisan config:clear \
     && php artisan cache:clear
 
-# Expone el puerto en el que PHP-FPM escucha
-EXPOSE 8000
+# Exponer el puerto 80 para la web
+EXPOSE 80
 
-# Configura el comando para iniciar PHP-FPM
-CMD ["php-fpm"]
+# Establece el comando por defecto
+CMD ["apache2-foreground"]
