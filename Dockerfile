@@ -28,7 +28,10 @@ COPY . .
 # Instala las dependencias de Composer
 RUN composer install --no-scripts --no-autoloader
 
-# Limpia el caché de rutas y configuración
+# Copia el resto de los archivos del proyecto
+COPY . .
+
+# Ahora las dependencias deben estar instaladas, por lo que se puede limpiar el caché
 RUN php artisan route:clear && \
     php artisan config:clear && \
     php artisan cache:clear
