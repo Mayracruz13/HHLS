@@ -35,9 +35,11 @@ RUN composer install --no-autoloader --no-scripts
 # Copia el resto del código fuente de la aplicación
 COPY . .
 
-# Genera el autoload y limpia el caché
-RUN composer dump-autoload \
-    && php artisan config:cache \
+# Genera el autoload
+RUN composer dump-autoload
+
+# Limpia caché y configura la aplicación
+RUN php artisan config:cache \
     && php artisan cache:clear
 
 # Exponer el puerto 80 para la web
