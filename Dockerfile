@@ -1,13 +1,11 @@
 # Usa una imagen base con PHP 8.2
 FROM php:8.2-cli
 
-# Instala Node.js y Yarn
-RUN curl -fsSL https://deb.nodesource.com/setup_16.x | bash - \
-    && apt-get install -y nodejs \
-    && npm install -g yarn
-
-# Instala dependencias de sistema necesarias (si es necesario)
+# Instala dependencias del sistema y herramientas necesarias
 RUN apt-get update && apt-get install -y \
+    git \
+    unzip \
+    zip \
     libpng-dev \
     libjpeg-dev \
     libfreetype6-dev \
@@ -17,6 +15,11 @@ RUN apt-get update && apt-get install -y \
 # Instala Composer
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
+# Instala Node.js y Yarn
+RUN curl -fsSL https://deb.nodesource.com/setup_16.x | bash - \
+    && apt-get install -y nodejs \
+    && npm install -g yarn
+
 # Copia el código de la aplicación
 COPY . /app
 
@@ -24,7 +27,7 @@ COPY . /app
 WORKDIR /app
 
 # Instala dependencias de Composer
-RUN composer install
+RUN COMPOSER_ALLOW_SUPERUSER=1 composer install
 
 # Instala dependencias de Yarn y construye los assets
 RUN yarn && yarn build
@@ -35,4 +38,5 @@ RUN php artisan optimize && \
     php artisan route:cache && \
     php artisan view:cache && \
     php artisan migrate --force
+
 
