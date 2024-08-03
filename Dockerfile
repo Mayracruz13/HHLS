@@ -35,7 +35,7 @@ RUN composer dump-autoload \
     && php artisan cache:clear
 
 # Expone el puerto en el que PHP-FPM escucha
-EXPOSE 9000
+EXPOSE 8000
 
 # Configura el comando para iniciar PHP-FPM
 CMD ["php-fpm"]
