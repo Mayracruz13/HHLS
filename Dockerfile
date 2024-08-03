@@ -1,4 +1,4 @@
-# Usa una imagen base con PHP y Composer preinstalados
+# Usa una imagen base con PHP
 FROM php:8.1-cli
 
 # Instala Node.js y Yarn
@@ -13,6 +13,9 @@ RUN apt-get update && apt-get install -y \
     libfreetype6-dev \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
     && docker-php-ext-install gd
+
+# Instala Composer
+COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
 # Copia el código de la aplicación
 COPY . /app
@@ -32,5 +35,4 @@ RUN php artisan optimize && \
     php artisan route:cache && \
     php artisan view:cache && \
     php artisan migrate --force
-
 
