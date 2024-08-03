@@ -1,39 +1,46 @@
-# Usa una imagen base con PHP 8.2
-FROM php:8.2-cli
+# Utiliza una imagen base de PHP con soporte para Laravel
+FROM php:8.1-fpm
 
-# Instala dependencias del sistema y herramientas necesarias
+# Instala las extensiones necesarias de PHP
 RUN apt-get update && apt-get install -y \
-    git \
-    unzip \
-    zip \
     libpng-dev \
     libjpeg-dev \
     libfreetype6-dev \
+    libzip-dev \
+    unzip \
+    git \
+    libonig-dev \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
-    && docker-php-ext-install gd
-
-# Instala Node.js 18 y Yarn
-RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash - \
-    && apt-get install -y nodejs \
-    && npm install -g yarn
+    && docker-php-ext-install gd zip pdo pdo_mysql \
+    && pecl install xdebug \
+    && docker-php-ext-enable xdebug
 
 # Instala Composer
-COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
-
-# Copia el código de la aplicación
-COPY . /app
+COPY --from=composer:latest /usr/bin/composer /usr/local/bin/composer
 
 # Establece el directorio de trabajo
-WORKDIR /app
+WORKDIR /var/www
 
-# Instala dependencias de Composer
-RUN COMPOSER_ALLOW_SUPERUSER=1 composer install
+# Copia el archivo de dependencias y los archivos del proyecto
+COPY composer.json composer.lock ./
+COPY . .
+
+# Instala las dependencias de Composer
+RUN composer install --no-scripts --no-autoloader
+
+# Limpia el caché de rutas y configuración
+RUN php artisan route:clear && \
+    php artisan config:clear && \
+    php artisan cache:clear
+
+# Instala dependencias de Node.js (si usas Yarn o npm)
+RUN apt-get install -y \
+    nodejs \
+    npm \
+    && npm install -g yarn
 
 # Instala dependencias de Yarn y construye los assets
-RUN yarn && yarn build
-
-# Limpia la caché de rutas de Laravel
-RUN php artisan route:clear
+RUN yarn install && yarn build
 
 # Ejecuta comandos de optimización de Laravel
 RUN php artisan optimize && \
@@ -42,4 +49,8 @@ RUN php artisan optimize && \
     php artisan view:cache && \
     php artisan migrate --force
 
+# Expone el puerto 8000 para la aplicación Laravel
+EXPOSE 8000
 
+# Comando para iniciar el servidor
+CMD ["php", "artisan", "serve", "--host=0.0.0.0", "--port=8000"]
