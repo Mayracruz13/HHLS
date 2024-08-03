@@ -1,5 +1,5 @@
-# Utiliza una imagen base de PHP con soporte para Laravel
-FROM php:8.1-fpm
+# Usa una imagen base con PHP 8.2
+FROM php:8.2-cli
 
 # Instala las extensiones necesarias de PHP
 RUN apt-get update && apt-get install -y \
