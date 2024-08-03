@@ -23,16 +23,16 @@ WORKDIR /var/www
 
 # Copia el archivo de dependencias y los archivos del proyecto
 COPY composer.json composer.lock ./
-COPY . .
 
 # Instala las dependencias de Composer
 RUN composer install --no-scripts --no-autoloader
 
-# Crea un archivo SQLite temporal (opcional si usas SQLite en pruebas)
-RUN mkdir -p /var/www/database && touch /var/www/database/database.sqlite
+# Copia el resto de los archivos del proyecto
+COPY . .
 
-# Limpia el caché de rutas y configuración
-RUN php artisan route:clear && \
+# Genera el autoload y limpia el caché
+RUN composer dump-autoload && \
+    php artisan route:clear && \
     php artisan config:clear && \
     php artisan cache:clear
 
